@@ -1,5 +1,9 @@
 async function loadScores() {
-    const response = await fetch('matches.csv');
+    // Append a timestamp query parameter and disable cache to prevent browsers from
+    // serving a cached version of the CSV file.
+    const response = await fetch(`matches.csv?cacheBust=${Date.now()}`, {
+        cache: 'no-store'
+    });
     const text = await response.text();
     const lines = text.trim().split(/\r?\n/);
     lines.shift(); // remove header
